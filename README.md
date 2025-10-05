@@ -28,13 +28,40 @@ This application showcases a complete Kafka Streams pipeline that:
 ## II.️ Architecture
 
 ```mermaid
-flowchart LR
-    A[PageEvent Generation (T2)] --> B[Stream Processing]
-    B --> C[Aggregated Counts (T3)]
-    C --> D[Real-time Dashboard]
-
-    B --> E[State Store (count-store)]
-    E --> F[Analytics Endpoint (/analytics)]
+graph TB
+    subgraph "Event Generation"
+        A[pageEventSupplier<br/>Every 200ms] -->|Publish| T2[Topic T2<br/>Raw PageEvents]
+        MANUAL[Manual Publish<br/>/publish endpoint] -.->|Optional| T2
+    end
+    
+    subgraph "Stream Processing Pipeline"
+        T2 -->|Consume| SP[Kafka Streams Processor<br/>kStreamFunction]
+        SP -->|1. Filter duration > 100| SP
+        SP -->|2. Map to KeyValue| SP
+        SP -->|3. GroupBy page name| SP
+        SP -->|4. Window 5 seconds| SP
+        SP -->|5. Count aggregation| SP
+        SP -->|Write| SS[(State Store<br/>count-store)]
+        SP -->|Publish| T3[Topic T3<br/>Aggregated Counts]
+    end
+    
+    subgraph "Real-time Analytics"
+        SS -->|Query every 1s| API[Analytics Endpoint<br/>/analytics]
+        API -->|Server-Sent Events| DASH[Live Dashboard<br/>index.html]
+        API -.->|Alternative| CURL[curl/REST clients]
+    end
+    
+    subgraph "Optional Monitoring"
+        T2 -.->|Monitor| K2[Kafka Console Consumer<br/>Topic T2]
+        T3 -.->|Monitor| K3[Kafka Console Consumer<br/>Topic T3]
+    end
+    
+    style T2 fill:#e1f5ff
+    style T3 fill:#e1f5ff
+    style SS fill:#fff4e6
+    style SP fill:#f3e5f5
+    style DASH fill:#e8f5e9
+    style API fill:#e8f5e9
 ```
 
 ### 1. Components
