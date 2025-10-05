@@ -78,7 +78,7 @@ docker-compose ps
 > Note:
 > Test if the consumer and producer working
 
-![imgs/Pasted image.png]
+![./imgs/Pasted image.png]
 
 ### 2. Run the Application
 
