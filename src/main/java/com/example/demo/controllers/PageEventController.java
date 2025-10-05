@@ -25,4 +25,5 @@ public class PageEventController {
         streamBridge.send(topic,event);
         return event;
     }
+
 }
