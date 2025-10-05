@@ -36,11 +36,6 @@ graph TB
     
     subgraph "Stream Processing Pipeline"
         T2 -->|Consume| SP[Kafka Streams Processor<br/>kStreamFunction]
-        SP -->|1. Filter duration > 100| SP
-        SP -->|2. Map to KeyValue| SP
-        SP -->|3. GroupBy page name| SP
-        SP -->|4. Window 5 seconds| SP
-        SP -->|5. Count aggregation| SP
         SP -->|Write| SS[(State Store<br/>count-store)]
         SP -->|Publish| T3[Topic T3<br/>Aggregated Counts]
     end
@@ -48,12 +43,6 @@ graph TB
     subgraph "Real-time Analytics"
         SS -->|Query every 1s| API[Analytics Endpoint<br/>/analytics]
         API -->|Server-Sent Events| DASH[Live Dashboard<br/>index.html]
-        API -.->|Alternative| CURL[curl/REST clients]
-    end
-    
-    subgraph "Optional Monitoring"
-        T2 -.->|Monitor| K2[Kafka Console Consumer<br/>Topic T2]
-        T3 -.->|Monitor| K3[Kafka Console Consumer<br/>Topic T3]
     end
     
     style T2 fill:#e1f5ff
