@@ -94,7 +94,7 @@ docker-compose ps
 > Note:
 > Test if the consumer and producer working
 
-![./imgs/Pasted image.png]
+![](./imgs/Pasted image.png)
 
 ### 2. Run the Application
 
@@ -109,11 +109,11 @@ mvn clean package
 java -jar target/demo-0.0.1-SNAPSHOT.jar
 ```
 
-![imgs/Pasted image (2).png]
+![](./imgs/Pasted image (2).png)
 
 The application will start on `http://localhost:8080`
 
-![imgs/Pasted image (3).png]
+![](./imgs/Pasted image (3).png)
 
 ## IV. Testing Features
 
@@ -134,7 +134,7 @@ docker exec -it bdcc-kafla-broker kafka-console-consumer \
 {"name":"P2","user":"U1","date":1234567891,"duration":8765}
 ```
 
-![imgs/Pasted image (5).png]
+![](./imgs/Pasted image (5).png)
 
 ### 2. Monitor Aggregated Counts (Topic T3)
 
@@ -153,7 +153,7 @@ P1    15
 P2    23
 P1    18
 ```
-![imgs/Pasted image (8).png]
+![](./imgs/Pasted image (8).png)
 
 ### 3. Manual Event Publishing
 
@@ -200,7 +200,7 @@ Open the real-time visualization dashboard:
 http://localhost:8080/index.html
 ```
 
-![imgs/Pasted image (9).png]
+![](./imgs/Pasted image (9).png)
 
 **Features:**
 - Green line: P1 page view counts
